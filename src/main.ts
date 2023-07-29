@@ -81,3 +81,51 @@ export function lenLimitUnder(inputValue: string, len: number): Result {
   if (inputValue.length < len) return true;
   return reportError('주어진 제한 길이보다 입력 값이 큽니다.');
 }
+
+/**
+ *
+ *
+ * @param {string} inputValue   유효성 검사를 진행할 입력값 입니다.
+ *
+ * @returns {Result}
+ *
+ * @description 입력된 문자열이 이메일 형식인지 확인합니다.
+ */
+export function isEmail(inputValue: string): Result {
+  const regxEmail = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+  if (regxEmail.test(inputValue)) return true;
+  return reportError('올바른 이메일 형식이 아닙니다.');
+}
+
+/**
+ *
+ *
+ * @param {string} inputValue   유효성 검사를 진행할 입력값 입니다.
+ * @param {number} options      비밀번호 형식을 설정합니다.
+ * @example
+ * options = 0 // 영문자
+ * options = 1 // 영문자 및 숫자 포함
+ * options = 2 // 영문자, 숫자 및 특수문자 포함
+ *
+ *
+ * @returns {Result}
+ *
+ * @description 입력된 문자열이 설정한 비밀번호 형식과 알맞는지 확인합니다.
+ */
+export function isPassword(inputValue: string, options: number = 0): Result {
+  let regxPassword: RegExp;
+  switch (options) {
+    case 1:
+      regxPassword = /^[a-zA-Z0-9]*$/;
+      break;
+    case 2:
+      regxPassword = /^.*(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%*^&+=`~]).*$/;
+      break;
+    default:
+      regxPassword = /^[a-zA-Z]$/;
+      break;
+  }
+
+  if (regxPassword.test(inputValue)) return true;
+  return reportError('설정한 비밀번호 형식과 일치하지 않습니다.');
+}
