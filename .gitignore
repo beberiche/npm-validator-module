@@ -1,0 +1,8 @@
+# package
+node_modules
+# typescript compile
+/dist
+package-lock.json
+tsconfig.json
+tslint.json
+.prettierrc
