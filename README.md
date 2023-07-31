@@ -4,11 +4,11 @@
 
 ## Methods
 
-- [isEmail](./##isEmail)
-- [isPassword](./##isPassword)
-- [lenLimit](./##lenLimit)
-- [lenLimitMore](./##lenLimitMore)
-- [lenLimitUnder](./##lenLimitUnder)
+- [isEmail](##isEmail)
+- [isPassword](##isPassword)
+- [lenLimit](##lenLimit)
+- [lenLimitMore](##lenLimitMore)
+- [lenLimitUnder](##lenLimitUnder)
 
 ## isEmail
 
@@ -22,7 +22,7 @@
 
 ## isPassword
 
-> feature : 입력된 문자열이 설정한 비밀번호 형식과 알맞는지 확인합니다.
+> feature : 입력된 문자열이 설정한 비밀번호 형식과 알맞는지 확인합니다.  
 > source : - [main.ts](./src/main.ts/#L151)
 
 **Parmeters**
@@ -33,7 +33,7 @@
 
 ## lenLimit
 
-> feature : 입력값이 유효 길이 범위안에 속해 있는지 체크합니다.
+> feature : 입력값이 유효 길이 범위안에 속해 있는지 체크합니다.  
 > source : - [main.ts](./src/main.ts/#L55)
 
 **Parmeters**
@@ -45,7 +45,7 @@
 
 ## lenLimitMore
 
-> feature : 입력값의 길이가 주어진 유효범위 이상인지 확인합니다.
+> feature : 입력값의 길이가 주어진 유효범위 이상인지 확인합니다.  
 > source : - [main.ts](./src/main.ts/#L77)
 
 **Parmeters**
@@ -56,7 +56,7 @@
 
 ## lenLimitUnder
 
-> feature : 입력값의 길이가 주어진 유효범위 미만인지 확인합니다.
+> feature : 입력값의 길이가 주어진 유효범위 미만인지 확인합니다.  
 > source : - [main.ts](./src/main.ts/#L99)
 
 **Parmeters**
