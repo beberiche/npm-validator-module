@@ -4,11 +4,11 @@
 
 ## Methods
 
-- [isEmail](##isEmail)
-- [isPassword](##isPassword)
-- [lenLimit](##lenLimit)
-- [lenLimitMore](##lenLimitMore)
-- [lenLimitUnder](##lenLimitUnder)
+- [isEmail](#isEmail)
+- [isPassword](#isPassword)
+- [lenLimit](#lenLimit)
+- [lenLimitMore](#lenLimitMore)
+- [lenLimitUnder](#lenLimitUnder)
 
 ## isEmail
 
