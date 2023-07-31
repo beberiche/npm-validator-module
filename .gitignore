@@ -2,6 +2,7 @@
 node_modules
 # typescript compile
 /dist
+/out
 package-lock.json
 tsconfig.json
 tslint.json

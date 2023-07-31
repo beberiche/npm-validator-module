@@ -11,8 +11,6 @@ class ValidationError extends Error {
   }
 }
 
-type Result = true | void;
-
 // function reportError(msg: string): ValidError {
 //   return {
 //     error: 'Error',
@@ -26,12 +24,12 @@ type Result = true | void;
 //  * @param {Array<Array<String | number>>} args  함수에 사용할 인자를 2차원 배열로 받습니다. 함수의 인덱스와 인자의 배열 인덱스는 서로 동일해야합니다.
 //  * @param {Array<Function>} funcs 함수의 배열을 담습니다. 함수의 길이만큼 유효성 검사가 진행됩니다.
 //  *
-//  * @returns {Result}
+//  * @returns {true | void}
 //  *
 //  * @description 함수의 배열과, 2차원 인자 배열을 받아 각 인덱스에 맞게 유효성 함수들을 실행합니다.
 //  */
 // export function validHandler(args: Array<Array<String | number>>, funcs: Array<Function>) {
-//   let ret: Result;
+//   let ret: true | void;
 //   if (!Array.isArray(args) || !Array.isArray(args[0])) return reportError('인자 배열의 형식이 잘못되었습니다.');
 //   if (!Array.isArray(funcs) || typeof funcs[0] !== 'function') return reportError('함수 배열의 형식이 잘못되었습니다.');
 //   if (args.length !== funcs.length) return reportError('인수 배열의 길이와 함수 배열의 길이는 서로 일치해야 합니다');
@@ -43,7 +41,6 @@ type Result = true | void;
 //   return true;
 // }
 
-// @ts-check
 /**
  *
  *
@@ -51,11 +48,11 @@ type Result = true | void;
  * @param {number} len1         유효 길이에 대한 시작 값 입니다. (이상)
  * @param {number} len2         유효 길이에 대한 끝 값 입니다. (미만)
  *
- * @returns {Result}
+ * @returns {true | void}
  *
  * @description 길이 제한 유효성 함수로, 입력값이 유효 길이 범위안에 속해 있는지 체크합니다.
  */
-export function lenLimit(inputValue: string, len1: number, len2: number): Result {
+export function lenLimit(inputValue: string, len1: number, len2: number): true | void {
   try {
     if (typeof inputValue !== 'string' || typeof len1 !== 'number' || typeof len2 !== 'number')
       throw new ValidationError('typeError', '정의된 데이터 타입과 일치하지 않는 인자가 존재합니다.');
@@ -75,11 +72,11 @@ export function lenLimit(inputValue: string, len1: number, len2: number): Result
  * @param {string} inputValue   유효성 검사를 진행할 입력값 입니다.
  * @param {number} len          유효 길이에 대한 시작 값 입니다. (이상)
  *
- * @returns {Result}
+ * @returns {true | void}
  *
  * @description 입력값 길이를 체크하는 유효성 함수로, 입력값의 길이가 주어진 유효범위 이상인지 확인합니다.
  */
-export function lenLimitMore(inputValue: string, len: number): Result {
+export function lenLimitMore(inputValue: string, len: number): true | void {
   try {
     if (typeof inputValue !== 'string' || typeof len !== 'number')
       throw new ValidationError('typeError', '정의된 데이터 타입과 일치하지 않는 인자가 존재합니다.');
@@ -95,15 +92,15 @@ export function lenLimitMore(inputValue: string, len: number): Result {
  *
  *
  * @param {string} inputValue   유효성 검사를 진행할 입력값 입니다.
- * @param {number} len          유효 길이에 대한 시작 값 입니다. (미만)
+ * @param {number} len          유효 길이에 대한 끝 값 입니다. (미만)
  *
- * @returns {Result}
+ * @returns {true | void}
  *
  * @description 입력값 길이를 체크하는 유효성 함수로, 입력값의 길이가 주어진 유효범위 미만인지 확인합니다.
  *
  *
  */
-export function lenLimitUnder(inputValue: string, len: number): Result {
+export function lenLimitUnder(inputValue: string, len: number): true | void {
   try {
     if (typeof inputValue !== 'string' || typeof len !== 'number')
       throw new ValidationError('typeError', '정의된 데이터 타입과 일치하지 않는 인자가 존재합니다.');
@@ -119,11 +116,11 @@ export function lenLimitUnder(inputValue: string, len: number): Result {
  *
  * @param {string} inputValue   유효성 검사를 진행할 입력값 입니다.
  *
- * @returns {Result}
+ * @returns {true | void}
  *
  * @description 입력된 문자열이 이메일 형식인지 확인합니다.
  */
-export function isEmail(inputValue: string): Result {
+export function isEmail(inputValue: string): true | void {
   try {
     if (typeof inputValue !== 'string')
       throw new ValidationError('typeError', '정의된 데이터 타입과 일치하지 않는 인자가 존재합니다.');
@@ -146,11 +143,11 @@ export function isEmail(inputValue: string): Result {
  * options = 2 // 영문자, 숫자 및 특수문자 포함
  *
  *
- * @returns {Result}
+ * @returns {true | void}
  *
  * @description 입력된 문자열이 설정한 비밀번호 형식과 알맞는지 확인합니다.
  */
-export function isPassword(inputValue: string, options: number = 0): Result {
+export function isPassword(inputValue: string, options: number = 0): true | void {
   if (typeof inputValue !== 'string' || typeof options !== 'number')
     throw new ValidationError('typeError', '정의된 데이터 타입과 일치하지 않는 인자가 존재합니다.');
   try {
@@ -163,7 +160,7 @@ export function isPassword(inputValue: string, options: number = 0): Result {
         regxPassword = /^.*(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%*^&+=`~]).*$/;
         break;
       default:
-        regxPassword = /^[a-zA-Z]$/;
+        regxPassword = /^[a-zA-Z]*$/;
         break;
     }
 
