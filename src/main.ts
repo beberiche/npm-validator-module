@@ -58,9 +58,9 @@ export function lenLimit(inputValue: string, len1: number, len2: number): true |
       throw new ValidationError('typeError', '정의된 데이터 타입과 일치하지 않는 인자가 존재합니다.');
 
     let ret1 = lenLimitMore(inputValue, len1);
-    let ret2 = lenLimitMore(inputValue, len2);
+    let ret2 = lenLimitUnder(inputValue, len2);
     if (ret1 === true && ret2 === true) return true;
-    throw new ValidationError('validError', '입력 값이 유효 길이 범위 내에 일치하지 않습니다.');
+    else throw new ValidationError('validError', '입력값이 주어진 범위에 포함되지 않습니다.');
   } catch (e) {
     console.log(e);
   }
@@ -82,7 +82,7 @@ export function lenLimitMore(inputValue: string, len: number): true | void {
       throw new ValidationError('typeError', '정의된 데이터 타입과 일치하지 않는 인자가 존재합니다.');
 
     if (inputValue.length >= len) return true;
-    throw new ValidationError('validError', '주어진 제한 길이보다 입력 값이 작습니다.');
+    else throw new ValidationError('validError', '주어진 제한 길이보다 입력 값이 작습니다.');
   } catch (e) {
     console.log(e);
   }
@@ -105,7 +105,7 @@ export function lenLimitUnder(inputValue: string, len: number): true | void {
     if (typeof inputValue !== 'string' || typeof len !== 'number')
       throw new ValidationError('typeError', '정의된 데이터 타입과 일치하지 않는 인자가 존재합니다.');
     if (inputValue.length < len) return true;
-    throw new ValidationError('validError', '주어진 제한 길이보다 입력 값이 큽니다.');
+    else throw new ValidationError('validError', '주어진 제한 길이보다 입력 값이 큽니다.');
   } catch (e) {
     console.log(e);
   }
