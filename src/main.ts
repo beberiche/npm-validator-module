@@ -1,15 +1,24 @@
-type ValidError = {
-  error: string;
-  msg: string;
-};
-type Result = true | ValidError;
+// type ValidError = {
+//   error: string;
+//   msg: string;
+// };
 
-function reportError(msg: string): ValidError {
-  return {
-    error: 'Error',
-    msg,
-  };
+class ValidationError extends Error {
+  errorType: string;
+  constructor(errorType: string, message: string) {
+    super(message);
+    this.errorType = errorType;
+  }
 }
+
+type Result = true | void;
+
+// function reportError(msg: string): ValidError {
+//   return {
+//     error: 'Error',
+//     msg,
+//   };
+// }
 
 // /**
 //  *
@@ -34,52 +43,75 @@ function reportError(msg: string): ValidError {
 //   return true;
 // }
 
+// @ts-check
 /**
  *
  *
  * @param {string} inputValue   유효성 검사를 진행할 입력값 입니다.
- * @param {string} len1         유효 길이에 대한 시작 값 입니다. (이상)
- * @param {string} len2         유효 길이에 대한 끝 값 입니다. (미만)
+ * @param {number} len1         유효 길이에 대한 시작 값 입니다. (이상)
+ * @param {number} len2         유효 길이에 대한 끝 값 입니다. (미만)
  *
  * @returns {Result}
  *
  * @description 길이 제한 유효성 함수로, 입력값이 유효 길이 범위안에 속해 있는지 체크합니다.
  */
 export function lenLimit(inputValue: string, len1: number, len2: number): Result {
-  let ret1 = lenLimitMore(inputValue, len1);
-  let ret2 = lenLimitMore(inputValue, len2);
-  if (ret1 === true && ret2 === true) return true;
-  return reportError('주어진 제한 범위에 입력값 길이가 해당되지 않습니다.');
+  try {
+    if (typeof inputValue !== 'string' || typeof len1 !== 'number' || typeof len2 !== 'number')
+      throw new ValidationError('typeError', '정의된 데이터 타입과 일치하지 않는 인자가 존재합니다.');
+
+    let ret1 = lenLimitMore(inputValue, len1);
+    let ret2 = lenLimitMore(inputValue, len2);
+    if (ret1 === true && ret2 === true) return true;
+    throw new ValidationError('validError', '입력 값이 유효 길이 범위 내에 일치하지 않습니다.');
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 /**
  *
  *
  * @param {string} inputValue   유효성 검사를 진행할 입력값 입니다.
- * @param {string} len          유효 길이에 대한 시작 값 입니다. (이상)
+ * @param {number} len          유효 길이에 대한 시작 값 입니다. (이상)
  *
  * @returns {Result}
  *
  * @description 입력값 길이를 체크하는 유효성 함수로, 입력값의 길이가 주어진 유효범위 이상인지 확인합니다.
  */
 export function lenLimitMore(inputValue: string, len: number): Result {
-  if (inputValue.length >= len) return true;
-  return reportError('주어진 제한 길이보다 입력 값이 작습니다.');
+  try {
+    if (typeof inputValue !== 'string' || typeof len !== 'number')
+      throw new ValidationError('typeError', '정의된 데이터 타입과 일치하지 않는 인자가 존재합니다.');
+
+    if (inputValue.length >= len) return true;
+    throw new ValidationError('validError', '주어진 제한 길이보다 입력 값이 작습니다.');
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 /**
  *
  *
  * @param {string} inputValue   유효성 검사를 진행할 입력값 입니다.
- * @param {string} len          유효 길이에 대한 시작 값 입니다. (미만)
+ * @param {number} len          유효 길이에 대한 시작 값 입니다. (미만)
  *
  * @returns {Result}
  *
  * @description 입력값 길이를 체크하는 유효성 함수로, 입력값의 길이가 주어진 유효범위 미만인지 확인합니다.
+ *
+ *
  */
 export function lenLimitUnder(inputValue: string, len: number): Result {
-  if (inputValue.length < len) return true;
-  return reportError('주어진 제한 길이보다 입력 값이 큽니다.');
+  try {
+    if (typeof inputValue !== 'string' || typeof len !== 'number')
+      throw new ValidationError('typeError', '정의된 데이터 타입과 일치하지 않는 인자가 존재합니다.');
+    if (inputValue.length < len) return true;
+    throw new ValidationError('validError', '주어진 제한 길이보다 입력 값이 큽니다.');
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 /**
@@ -92,16 +124,22 @@ export function lenLimitUnder(inputValue: string, len: number): Result {
  * @description 입력된 문자열이 이메일 형식인지 확인합니다.
  */
 export function isEmail(inputValue: string): Result {
-  const regxEmail = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
-  if (regxEmail.test(inputValue)) return true;
-  return reportError('올바른 이메일 형식이 아닙니다.');
+  try {
+    if (typeof inputValue !== 'string')
+      throw new ValidationError('typeError', '정의된 데이터 타입과 일치하지 않는 인자가 존재합니다.');
+    const regxEmail = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+    if (regxEmail.test(inputValue)) return true;
+    throw new ValidationError('validError', '올바른 이메일 형식이 아닙니다.');
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 /**
  *
  *
  * @param {string} inputValue   유효성 검사를 진행할 입력값 입니다.
- * @param {number} options      비밀번호 형식을 설정합니다.
+ * @param {number} [options]      비밀번호 형식을 설정합니다.
  * @example
  * options = 0 // 영문자
  * options = 1 // 영문자 및 숫자 포함
@@ -113,19 +151,25 @@ export function isEmail(inputValue: string): Result {
  * @description 입력된 문자열이 설정한 비밀번호 형식과 알맞는지 확인합니다.
  */
 export function isPassword(inputValue: string, options: number = 0): Result {
-  let regxPassword: RegExp;
-  switch (options) {
-    case 1:
-      regxPassword = /^[a-zA-Z0-9]*$/;
-      break;
-    case 2:
-      regxPassword = /^.*(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%*^&+=`~]).*$/;
-      break;
-    default:
-      regxPassword = /^[a-zA-Z]$/;
-      break;
-  }
+  if (typeof inputValue !== 'string' || typeof options !== 'number')
+    throw new ValidationError('typeError', '정의된 데이터 타입과 일치하지 않는 인자가 존재합니다.');
+  try {
+    let regxPassword: RegExp;
+    switch (options) {
+      case 1:
+        regxPassword = /^[a-zA-Z0-9]*$/;
+        break;
+      case 2:
+        regxPassword = /^.*(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%*^&+=`~]).*$/;
+        break;
+      default:
+        regxPassword = /^[a-zA-Z]$/;
+        break;
+    }
 
-  if (regxPassword.test(inputValue)) return true;
-  return reportError('설정한 비밀번호 형식과 일치하지 않습니다.');
+    if (regxPassword.test(inputValue)) return true;
+    throw new ValidationError('validError', '설정한 비밀번호 형식과 일치하지 않습니다.');
+  } catch (e) {
+    console.log(e);
+  }
 }
