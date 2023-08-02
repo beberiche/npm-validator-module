@@ -6,6 +6,7 @@
 
 - [isEmail](#isemail)
 - [isPassword](#ispassword)
+- [isPhoneNumber](#isphonenumber)
 - [lenLimit](#lenlimit)
 - [lenLimitMore](#lenlimitmore)
 - [lenLimitUnder](#lenlimitunder)
@@ -54,6 +55,31 @@ console.log(ret); // true
 ret = isPassword('asdfadsf123', 2); // 2, 영문자, 숫자 그리고 특수문자 포함
 console.log(ret); // undefined
 // Error: 설정한 비밀번호 형식과 일치하지 않습니다.
+```
+
+## isPhoneNumber
+
+> feature : 입력된 문자열이 휴대폰 번호 혹은 전화번호 형식에 알맞는지 확인합니다.
+> source : - [main.ts](./src/main.ts/#L183)
+
+**Parmeters**
+|Name|Type|Description|
+|----|----|---------|
+|inputValue|string|유효성 검사를 진행할 입력 값 입니다.|
+
+**examples**
+
+```js
+import { isPhoneNumber } from '@beberiche/validator';
+
+let ret = isPhoneNumber('010-1234-4567');
+console.log(ret); // true
+ret = isPhoneNumber('02-123-4567');
+console.log(ret); // true
+ret = isPhoneNumber('01744021234');
+console.log(ret); // true
+ret = isPhoneNumber('01234567890');
+// Error : 올바른 휴대폰 번호 혹은 전화번호 형식이 아닙니다.
 ```
 
 ## lenLimit

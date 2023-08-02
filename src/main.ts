@@ -81,7 +81,7 @@ export function lenLimitMore(inputValue: string, len: number): true | void {
     if (typeof inputValue !== 'string' || typeof len !== 'number')
       throw new ValidationError('typeError', '정의된 데이터 타입과 일치하지 않는 인자가 존재합니다.');
 
-    if (inputValue.length >= len) return true;
+    if (inputValue.trim().length >= len) return true;
     else throw new ValidationError('validError', '주어진 제한 길이보다 입력 값이 작습니다.');
   } catch (e) {
     console.log(e);
@@ -104,7 +104,7 @@ export function lenLimitUnder(inputValue: string, len: number): true | void {
   try {
     if (typeof inputValue !== 'string' || typeof len !== 'number')
       throw new ValidationError('typeError', '정의된 데이터 타입과 일치하지 않는 인자가 존재합니다.');
-    if (inputValue.length < len) return true;
+    if (inputValue.trim().length < len) return true;
     else throw new ValidationError('validError', '주어진 제한 길이보다 입력 값이 큽니다.');
   } catch (e) {
     console.log(e);
@@ -125,7 +125,7 @@ export function isEmail(inputValue: string): true | void {
     if (typeof inputValue !== 'string')
       throw new ValidationError('typeError', '정의된 데이터 타입과 일치하지 않는 인자가 존재합니다.');
     const regxEmail = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
-    if (regxEmail.test(inputValue)) return true;
+    if (regxEmail.test(inputValue.trim())) return true;
     throw new ValidationError('validError', '올바른 이메일 형식이 아닙니다.');
   } catch (e) {
     console.log(e);
@@ -164,8 +164,31 @@ export function isPassword(inputValue: string, options: number = 0): true | void
         break;
     }
 
-    if (regxPassword.test(inputValue)) return true;
+    if (regxPassword.test(inputValue.trim())) return true;
     throw new ValidationError('validError', '설정한 비밀번호 형식과 일치하지 않습니다.');
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+/**
+ *
+ *
+ * @param {string} inputValue   유효성 검사를 진행할 입력값 입니다.
+ *
+ * @returns {true | void}
+ *
+ * @description 입력된 문자열이 휴대폰 번호 혹은 전화번호 형식에 알맞는지 확인합니다.
+ */
+export function isPhoneNumber(inputValue: string): true | void {
+  if (typeof inputValue !== 'string')
+    throw new ValidationError('typeError', '정의된 데이터 타입과 일치하지 않는 인자가 존재합니다.');
+
+  try {
+    const str = inputValue.replace(/-/g, '').trim();
+    let regxPhoneNumber = /^(070|02|01[016789]{1}|0[3-9]{1}[0-9]{1})[0-9]{3,4}[0-9]{4}$/;
+    if (regxPhoneNumber.test(str.trim())) return true;
+    throw new ValidationError('validError', '올바른 휴대폰 번호 혹은 전화번호 형식이 아닙니다.');
   } catch (e) {
     console.log(e);
   }
