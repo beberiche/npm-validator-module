@@ -51,6 +51,9 @@ class ValidationError extends Error {
  * @returns {true | void}
  *
  * @description 길이 제한 유효성 함수로, 입력값이 유효 길이 범위안에 속해 있는지 체크합니다.
+ *
+ * @example
+ *
  */
 export function lenLimit(inputValue: string, len1: number, len2: number): true | void {
   try {
