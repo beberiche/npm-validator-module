@@ -53,6 +53,10 @@ class ValidationError extends Error {
  * @description 길이 제한 유효성 함수로, 입력값이 유효 길이 범위안에 속해 있는지 체크합니다.
  *
  * @example
+ * let ret = lenLimit('asdf', 2, 8); // 2이상 8미만
+ * console.log(ret); // true
+ * ret = lenLimit('sadfa', 6, 8);
+ * console.log(ret); // undefined, Error : 입력값이 주어진 범위에 포함되지 않습니다.
  *
  */
 export function lenLimit(inputValue: string, len1: number, len2: number): true | void {
@@ -78,6 +82,12 @@ export function lenLimit(inputValue: string, len1: number, len2: number): true |
  * @returns {true | void}
  *
  * @description 입력값 길이를 체크하는 유효성 함수로, 입력값의 길이가 주어진 유효범위 이상인지 확인합니다.
+ *
+ * @example
+ * let ret = lenLimitMore('asdf', 3); // 3이상
+ * console.log(ret); // true
+ * ret = lenLimitMore('asdf', 5);
+ * console.log(ret); // undefined, Error : 주어진 제한 길이보다 입력 값이 작습니다.
  */
 export function lenLimitMore(inputValue: string, len: number): true | void {
   try {
@@ -101,7 +111,11 @@ export function lenLimitMore(inputValue: string, len: number): true | void {
  *
  * @description 입력값 길이를 체크하는 유효성 함수로, 입력값의 길이가 주어진 유효범위 미만인지 확인합니다.
  *
- *
+ * @example
+ * let ret = lenLimitUnder('asd', 8);
+ * console.log(ret); // true
+ * ret = lenLimitUnder('asdf', 4);
+ * console.log(ret); //undefined, Error : 주어진 제한 길이보다 입력 값이 큽니다.
  */
 export function lenLimitUnder(inputValue: string, len: number): true | void {
   try {
@@ -122,6 +136,12 @@ export function lenLimitUnder(inputValue: string, len: number): true | void {
  * @returns {true | void}
  *
  * @description 입력된 문자열이 이메일 형식인지 확인합니다.
+ *
+ * @example
+ * let ret = isEmail('asdf');
+ * console.log(ret); // undefined, Error : 올바른 이메일 형식이 아닙니다.
+ * ret = isEmail('asdf@gmail.com');
+ * console.log(ret); // true
  */
 export function isEmail(inputValue: string): true | void {
   try {
@@ -139,16 +159,23 @@ export function isEmail(inputValue: string): true | void {
  *
  *
  * @param {string} inputValue   유효성 검사를 진행할 입력값 입니다.
- * @param {number} [options]      비밀번호 형식을 설정합니다.
- * @example
- * options = 0 // 영문자
- * options = 1 // 영문자 및 숫자 포함
- * options = 2 // 영문자, 숫자 및 특수문자 포함
- *
+ * @param {number} [options]    비밀번호 형식을 설정합니다.
  *
  * @returns {true | void}
  *
  * @description 입력된 문자열이 설정한 비밀번호 형식과 알맞는지 확인합니다.
+ *
+ * @example
+ * // options = 0, 기본값 0, 영문자만 검사
+ * // options = 1, 1, 영문자 및 숫자 포함
+ * // options = 2, 2, 영문자, 숫자 그리고 특수문자 포함
+ *
+ * let ret = isPassword('asdf');
+ * console.log(ret); // true
+ * ret = isPassword('asdfadsf123', 1);
+ * console.log(ret); // true
+ * ret = isPassword('asdfadsf123', 2);
+ * console.log(ret); // undefined, Error: 설정한 비밀번호 형식과 일치하지 않습니다.
  */
 export function isPassword(inputValue: string, options: number = 0): true | void {
   if (typeof inputValue !== 'string' || typeof options !== 'number')
@@ -182,6 +209,16 @@ export function isPassword(inputValue: string, options: number = 0): true | void
  * @returns {true | void}
  *
  * @description 입력된 문자열이 휴대폰 번호 혹은 전화번호 형식에 알맞는지 확인합니다.
+ * 
+ * @example
+ * let ret = isPhoneNumber('010-1234-4567');
+ * console.log(ret); // true
+ * ret = isPhoneNumber('02-123-4567');
+ * console.log(ret); // true
+ * ret = isPhoneNumber('01744021234');
+ * console.log(ret); // true
+ * ret = isPhoneNumber('01234567890');
+// Error : 올바른 휴대폰 번호 혹은 전화번호 형식이 아닙니다.
  */
 export function isPhoneNumber(inputValue: string): true | void {
   if (typeof inputValue !== 'string')
