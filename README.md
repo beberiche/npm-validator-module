@@ -1,6 +1,7 @@
 # npm-validator-module
 
-사용자 입력 정보를 바탕으로 유효성 검사의 결과를 제공합니다.
+사용자 입력 정보를 바탕으로 유효성 검사의 결과를 제공합니다.  
+[@beberiche/validator 바로가기](https://www.npmjs.com/package/@beberiche/validator)
 
 ## Methods
 
